@@ -51,6 +51,14 @@ type Logger struct {
 	level  Level
 }
 
+func (l *Logger) SetLogger(logger *syslog.Logger) {
+	l.logger = logger
+}
+
+func (l *Logger) SetLevel(level Level) {
+	l.level = level
+}
+
 func NewFileLogger(path, prefix string, level Level) (*Logger, error) {
 	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
