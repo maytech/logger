@@ -59,6 +59,10 @@ func (l *Logger) SetLevel(level Level) {
 	l.level = level
 }
 
+func (l *Logger) GetLevel(level Level) {
+	l.level = level
+}
+
 func NewFileLogger(path, prefix string, level Level) (*Logger, error) {
 	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
@@ -70,6 +74,11 @@ func NewFileLogger(path, prefix string, level Level) (*Logger, error) {
 
 func NewStdoutLogger(prefix string, level Level) (*Logger, error) {
 	l := syslog.New(os.Stdout, prefix, syslog.LstdFlags)
+	return &Logger{l, level}, nil
+}
+
+func NewStderrLogger(prefix string, level Level) (*Logger, error) {
+	l := syslog.New(os.Stderr, prefix, syslog.LstdFlags)
 	return &Logger{l, level}, nil
 }
 
